@@ -7,7 +7,9 @@ const cartStore = useCartStore()
 <template>
   <main class="page">
     <h1>Корзина</h1>
-
+    <p v-if="cartStore.warning" class="warning">
+        {{ cartStore.warning }}
+    </p>
     <div class="cart-summary">
       <p><strong>Товаров:</strong> {{ cartStore.count }}</p>
       <p>
@@ -103,7 +105,10 @@ const cartStore = useCartStore()
   color: #666;
   font-size: 13px;
 }
-
+.warning {
+  color: #c62828;
+  font-weight: bold;
+}
 @media (max-width: 520px) {
   .cart-item {
     align-items: flex-start;

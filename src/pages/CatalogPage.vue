@@ -16,6 +16,9 @@ function addToCart(product) {
 </script>
 
 <template>
+    <p v-if="cartStore.warning" class="warning">
+        {{ cartStore.warning }}
+    </p>
   <main class="page">
     <h1>Каталог товаров</h1>
     <p>
@@ -60,5 +63,9 @@ function addToCart(product) {
   background: #42b983;
   color: white;
   cursor: pointer;
+}
+.warning {
+  color: #c62828;
+  font-weight: bold;
 }
 </style>
