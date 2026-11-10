@@ -17,7 +17,13 @@ const cartStore = useCartStore()
         {{ cartStore.sum.toLocaleString('ru-RU') }} ₽
       </p>
     </div>
-
+    <button
+    v-if="cartStore.canUndo"
+    сlass="btn-undo"
+    @click="cartStore.undoLastAction()"
+    >
+    Отменить последнее действие
+</button>
     <ul v-if="cartStore.items.length" class="cart-list">
       <li
         v-for="item in cartStore.items"
@@ -108,6 +114,11 @@ const cartStore = useCartStore()
 .warning {
   color: #c62828;
   font-weight: bold;
+}
+.btn-undo {
+  margin-bottom: 16px;
+  padding: 7px 10px;
+  cursor: pointer;
 }
 @media (max-width: 520px) {
   .cart-item {
