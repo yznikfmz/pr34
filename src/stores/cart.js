@@ -37,32 +37,34 @@ export const useCartStore = defineStore('cart', {
 
     removeFromCart(id) {
       this.items = this.items.filter((item) => item.id !== id)
+      this.warning = ''
       this.saveToLocalStorage()
     },
 
     clearCart() {
       this.items = []
+      this.warning = ''
       this.saveToLocalStorage()
     },
 
     updateQuantity(id, delta) {
-      const item = this.items.find((item) => item.id === id)
-      if (!item) return
-      if (delta > 0 && this.count >= 10) {
-         this.warning = 'В корзине может быть не больше 10 товаров.'
-         return
-        }
-        this.warning = ''
-      item.quantity += delta
+  const item = this.items.find((item) => item.id === id)
+  if (!item) return
 
-      if (item.quantity <= 0) {
-        this.removeFromCart(id)
-        this.warning = ''
-      } else {
-        this.saveToLocalStorage()
-        this.warning = ''
-      }
-    },
+  if (delta > 0 && this.count + delta > 10) {
+    this.warning = 'В корзине может быть не больше 10 товаров.'
+    return
+  }
+
+  this.warning = ''
+  item.quantity += delta
+
+  if (item.quantity <= 0) {
+    this.removeFromCart(id)
+  } else {
+    this.saveToLocalStorage()
+  }
+},
 
     saveToLocalStorage() {
       localStorage.setItem('cart_items', JSON.stringify(this.items))
