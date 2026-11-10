@@ -1,4 +1,7 @@
 <script setup>
+import { useFavoritesStore } from '../stores/favorites'
+
+const favoritesStore = useFavoritesStore()
 import { useCartStore } from '../stores/cart'
 
 const cartStore = useCartStore()
@@ -38,6 +41,9 @@ function addToCart(product) {
         <button class="btn-add" @click="addToCart(product)">
           В корзину
         </button>
+        <button @click="favoritesStore.toggle(product.id)">
+            {{favoritesStore.ids.includes(product.id) ? 'Убрать из избранного' : 'В избранное'}}
+             </button>
       </article>
     </div>
   </main>
