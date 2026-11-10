@@ -19,7 +19,7 @@ const cartStore = useCartStore()
     </div>
     <button
     v-if="cartStore.canUndo"
-    сlass="btn-undo"
+    class="btn-undo"
     @click="cartStore.undoLastAction()"
     >
     Отменить последнее действие
