@@ -2,6 +2,20 @@
 import { useCartStore } from '../stores/cart'
 
 const cartStore = useCartStore()
+function exportCart() {
+  const json = JSON.stringify(cartStore.items, null, 2)
+  const blob = new Blob([json], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+
+  link.href = url
+  link.download = 'cart.json'
+  document.body.appendChild(link)
+  link.click()
+  link.remove()
+
+  setTimeout(() => URL.revokeObjectURL(url), 1000)
+}
 </script>
 
 <template>
@@ -55,7 +69,13 @@ const cartStore = useCartStore()
     >
       Очистить корзину
     </button>
-
+    <button
+    v-if="cartStore.items.length"
+    class="btn-export"
+    @click="exportCart"
+    >
+    Скачать корзину
+</button>
     <p class="note">Данные корзины сохраняются между перезагрузками страницы.</p>
   </main>
 </template>
@@ -117,6 +137,11 @@ const cartStore = useCartStore()
 }
 .btn-undo {
   margin-bottom: 16px;
+  padding: 7px 10px;
+  cursor: pointer;
+}
+.btn-export {
+  margin: 16px 0 0 8px;
   padding: 7px 10px;
   cursor: pointer;
 }
